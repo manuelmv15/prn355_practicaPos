@@ -1,6 +1,6 @@
 package org.example.pos_practicamv23036;
 
-import org.example.pos_practicamv23036.Model.categoriaModel;
+import org.example.pos_practicamv23036.Model.*;
 import org.example.pos_practicamv23036.conexion.Conexion;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,13 +23,14 @@ public class HelloController {
         ArrayList<categoriaModel> data_categoria = new ArrayList<categoriaModel>();
         data_categoria = categoria.getAllCategoria();
 
-        for (categoriaModel item_categoria : data_categoria) {
-            System.out.println(item_categoria);
+
+        proveedorModel proveedor = new proveedorModel();
+        ArrayList<proveedorModel> Data_proveedor = new ArrayList<proveedorModel>();
+        Data_proveedor = proveedor.getAllproveedor();
+
+        for (var item : Data_proveedor) {
+            System.out.println(item);
 
         }
-
-        categoria.setNombrecategoria("Teclado TGB");
-     //   int i = categoria.saveCategoria();
-      //  System.out.println(i);
     }
 }
