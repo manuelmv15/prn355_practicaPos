@@ -54,17 +54,15 @@ public class proveedorModel {
         this.correo = correo;
     }
 
-    public ArrayList<proveedorModel> getAllproveedor()
-    {
+    public ArrayList<proveedorModel> getAllproveedor() {
         ArrayList<proveedorModel> Lis_proveedores = new ArrayList<proveedorModel>();
 
-        try
-        {
+        try {
             Connection connection = Conexion.connection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tbl_proveedores");
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
 
                 proveedorModel proveedor = new proveedorModel();
                 proveedor.setIdporveedror(resultSet.getInt("idproveedor"));
@@ -79,10 +77,57 @@ public class proveedorModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return  Lis_proveedores;
+        return Lis_proveedores;
 
     }
 
+    public int saveProveedor() {
+        try {
+            Connection connection = Conexion.connection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tbl_proveedores (nombreproveedor,telefono,correo)  values (?,?,?);");
+            preparedStatement.setString(1, this.nombreproveedor);
+            preparedStatement.setString(2, this.telefono);
+            preparedStatement.setString(3, this.correo);
+
+            int retur = preparedStatement.executeUpdate();
+            return retur;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int editProveedor() {
+        try {
+            Connection connection = Conexion.connection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tbl_proveedores SET nombreproveedor = ? , telefono = ?, correo = ? WHERE idproveedor =?;");
+            preparedStatement.setString(1, this.nombreproveedor);
+            preparedStatement.setString(2, this.telefono);
+            preparedStatement.setString(3, this.correo);
+            preparedStatement.setInt(4, this.idporveedror);
+
+            int into = preparedStatement.executeUpdate();
+            return into;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int DELATEproveedor() {
+        try {
+            Connection connection = Conexion.connection();
+            PreparedStatement preparedStatement = connection.prepareStatement("DELATE tbl_proveedores WHRE idporveedror =?");
+
+            preparedStatement.setInt(1, this.idporveedror);
+
+
+            int into = preparedStatement.executeUpdate();
+            return into;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public String toString() {
